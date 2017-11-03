@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 """
 ECE196 Face Recognition Project
 Author: W Chen
@@ -19,20 +20,18 @@ All the above steps should be in one function called process_image()
 def process_image():
     img = cv2.imread( "geisel.jpg", 0 )
     newImage = cv2.resize( img, None, fx = 0.5, fy = 0.5, interpolation = cv2.INTER_CUBIC )
+    
+    height = np.size( newImage, 0 )
+    width = np.size( newImage, 1 )
+    centerX = int( 0.5 * width )
+    centerY = int( 0.5 * height )
+    topLeft = ( centerX - 50, centerY - 50 )
+    bottomRight = ( centerX + 50, centerY + 50 )
 
-    newImageSize = newImage.shape
-    centerX = int( 0.5 * newImageSize[0] )
-    centerY = int( 0.5 * newImageSize[1] )
-    topLeft = ( centerX - 5, centerY - 5 )
-    bottomRight = ( centerX + 5, centerY + 5 )
-
-    print "newImageSize = ", newImageSize
-    print "centerX = ", centerX
-    print "topLeft = ", topLeft
     recImage = cv2.rectangle( newImage, topLeft, bottomRight, ( 255, 255, 255 ), 3 )
     #cv2.imwrite( 'geisel_rectangle.jpg', recImage )
-    #cv2.imshow( "geisel", recImage )
-    #cv2.waitKey( 0 )
+    cv2.imshow( "geisel", recImage )
+    cv2.waitKey( 0 )
     return
 
 
