@@ -20,20 +20,37 @@ Modify this code to write a LeNet with the following requirements:
 
 """
 
+
 from keras.layers import Input, Dense
+from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.models import Model
 
-# This returns a tensor
-inputs = Input(shape=(784,))
 
-# a layer instance is callable on a tensor, and returns a tensor
-x = Dense(64, activation='relu')(inputs)
-x = Dense(64, activation='relu')(x)
-predictions = Dense(10, activation='softmax')(x)
+inputs = Input( shape = (32,32,1) )
+
+c1 = Conv2D(filters=6, kernel_size = (5,5), activation = 'sigmoid') (inputs)
+s2 = MaxPooling2D(pool_size = (2,2)) (c1)
+c3 = Conv2D(filters=16, kernel_size = (5,5), activation = 'sigmoid') (s2)
+s4 = MaxPooling2D(pool_size = (2,2)) (c3)
+c5 = Conv2D(filters=120, kernel_size = (5,5), activation = 'sigmoid') (s4)
+f6 = Dense(84, activation='tanh') (c5)
+f7 = Dense(10, activation = 'softmax') (f6)
+
+
+print ('c1 = ', c1)
+print('s2 = ', s2)
+print('c3 = ', c3)
+print('s4 = ',s4)
+print('c5 = ',c5)
+print('f6 = ',f6)
+print('f7 = ',f7)
+
+
+
 
 # This creates a model that includes
 # the Input layer and three Dense layers
-model = Model(inputs=inputs, outputs=predictions)
+model = Model(inputs=inputs, outputs=f7)
 
 # print model architecture
 model.summary()
