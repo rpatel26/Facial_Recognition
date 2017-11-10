@@ -17,7 +17,7 @@ for i in range( 5 ):
     camera.capture( '/home/pi/Desktop/cameraFiles/img%s.jpg' %i )
 '''
 
-#camera.start_recording('/home/pi/Desktop/cameraFiles/video1.h264' )
+#camera.start_recording('./video1.h264' )
 sleep( 5 )
 #camera.stop_recording()
 i = 0
@@ -25,9 +25,9 @@ for effect in camera.IMAGE_EFFECTS:
     camera.image_effect = effect
     camera.annotate_text = "Effect: %s" %effect
     sleep(2)
-    camera.capture('/home/pi/Desktop/cameraFiles/img%s.jpg' %i)
+    camera.capture('./img%s.jpg' %i)
     i = i + 1
-    if i == 10:
+    if i == 100:
         break
 
 camera.stop_preview()
