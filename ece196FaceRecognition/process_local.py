@@ -20,7 +20,7 @@ All the above steps should be in one function called process_image()
 def process_image():
     img = cv2.imread( "geisel.jpg", 0 )
     newImage = cv2.resize( img, None, fx = 0.5, fy = 0.5, interpolation = cv2.INTER_CUBIC )
-    
+
     height = np.size( newImage, 0 )
     width = np.size( newImage, 1 )
     centerX = int( 0.5 * width )
@@ -28,9 +28,10 @@ def process_image():
     topLeft = ( centerX - 50, centerY - 50 )
     bottomRight = ( centerX + 50, centerY + 50 )
 
+
     cv2.rectangle( newImage, topLeft, bottomRight, ( 255, 255, 255 ), 3 )
+
     #cv2.imwrite( 'geisel_rectangle.jpg', recImage )
-    print ("image shape = ", newImage.shape)
     cv2.imshow( "geisel", newImage )
     cv2.waitKey( 0 )
     return
