@@ -28,15 +28,16 @@ def process_image():
     topLeft = ( centerX - 50, centerY - 50 )
     bottomRight = ( centerX + 50, centerY + 50 )
 
-    recImage = cv2.rectangle( newImage, topLeft, bottomRight, ( 255, 255, 255 ), 3 )
+    cv2.rectangle( newImage, topLeft, bottomRight, ( 255, 255, 255 ), 3 )
     #cv2.imwrite( 'geisel_rectangle.jpg', recImage )
-    cv2.imshow( "geisel", recImage )
+    print ("image shape = ", newImage.shape)
+    cv2.imshow( "geisel", newImage )
     cv2.waitKey( 0 )
     return
 
 
 def hello_world():
-    print 'Hello World!'
+    print( 'Hello World!')
     return
 
 
