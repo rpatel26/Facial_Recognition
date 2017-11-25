@@ -26,17 +26,22 @@ TRAIN_DIR = './yaleB_faces/trainSet/'  #TODO OK
 VAL_DIR = './yaleB_faces/valSet/'  #TODO OK
 NUM_EPOCHS = 1  #TODO OK
 BATCH_SIZE = 16
-NUM_CLASSES = 17  #TODO
+NUM_CLASSES = 17  #TODO OK
 
 
 def load_model():
     # TODO: use VGG16 to load lower layers of vgg16 network and declare it as base_model
     # TODO: use 'imagenet' for weights, include_top=False, (IMG_H, IMG_W, NUM_CHANNELS) for input_shape
 
+    base_model = VGG16(weights = 'imagenet', include_top=False, input_shape = (IMG_H,IMG_W,NUM_CHANNELS))
+    
+
     print('Model weights loaded.')
     base_out = base_model.output
     # TODO: add a flatten layer, a dense layer with 256 units, a dropout layer with 0.5 rate,
     # TODO: and another dense layer for output. The final layer should have the same number of units as classes
+
+    base_model.add(Flatten(),Dense(256),Dropout(units = 256))
 
     model = Model(inputs=base_model.input, outputs=predictions)
     print 'Build model'
@@ -78,7 +83,7 @@ def main():
     # make model
     model = load_model()
     print 'VGG16 created\n'
-
+    '''
     # read train and validation data and train the model for n epochs
     print 'Load train data:'
     X_train, Y_train = load_data(TRAIN_DIR)
@@ -90,6 +95,7 @@ def main():
     # TODO: Save model weights
 
     print 'model weights saved.'
+    '''
     return
 
 
