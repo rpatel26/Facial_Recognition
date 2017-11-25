@@ -38,7 +38,7 @@ def process_image():
 
 
 def hello_world():
-    print 'Hello World!'
+    print( 'Hello World!')
     return
 
 
