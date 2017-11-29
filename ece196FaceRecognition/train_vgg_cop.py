@@ -9,6 +9,7 @@ Use this as a template to:
 4. save weights
 """
 
+import keras
 from keras.models import Model
 from keras.applications.vgg16 import VGG16
 from keras import optimizers
@@ -24,9 +25,9 @@ IMG_H, IMG_W, NUM_CHANNELS = 224, 224, 3
 MEAN_PIXEL = np.array([104., 117., 123.]).reshape((1,1,3))
 TRAIN_DIR = './yaleB_faces/trainSet/'  #TODO OK
 VAL_DIR = './yaleB_faces/valSet/'  #TODO OK
-NUM_EPOCHS = 1  #TODO OK
+NUM_EPOCHS = 3  #TODO OK
 BATCH_SIZE = 16
-NUM_CLASSES = 17  #TODO OK
+NUM_CLASSES = 2  #TODO OK
 
 
 def load_model():
@@ -41,7 +42,10 @@ def load_model():
     # TODO: add a flatten layer, a dense layer with 256 units, a dropout layer with 0.5 rate,
     # TODO: and another dense layer for output. The final layer should have the same number of units as classes
 
-    base_model.add(Flatten(),Dense(256),Dropout(units = 256))
+    base_out = Flatten()(base_out)
+    base_out = Dense(256, activation = 'relu')(base_out)
+    base_out = Dropout(0.5)(base_out)
+    predictions = Dense(NUM_CLASSES, activation = 'softmax')(base_out)
 
     model = Model(inputs=base_model.input, outputs=predictions)
     print 'Build model'
@@ -50,6 +54,8 @@ def load_model():
     # TODO: compile the model, use SGD(lr=1e-4,momentum=0.9) for optimizer, 'categorical_crossentropy' for loss,
     # TODO: and ['accuracy'] for metrics
 
+    sgd = optimizers.SGD(lr=1e-4,momentum=0.9)
+    model.compile(loss = 'categorical_crossentropy', optimizer = sgd, metrics =['accuracy']) 
     print 'Compile model'
     return model
 
@@ -59,6 +65,7 @@ def load_data(src_path):
     # X: number_images * height * width * channels
     # Y: number_images * 1
     class_path_list = sorted(glob.glob(os.path.join(src_path, '*')))
+
     image_path_list = []
     for class_path in class_path_list:
         image_path_list += sorted(glob.glob(os.path.join(class_path, '*jpg')))
@@ -75,7 +82,8 @@ def load_data(src_path):
         image = cv2.resize(image, (IMG_H, IMG_W)) - MEAN_PIXEL
         X[i, :, :, :] = image
         Y[i, :] = label
-    Y = to_categorical(Y, NUM_CLASSES)
+#    Y = Y-np.min(Y)
+    Y = to_categorical(Y)
     return X, Y
 
 
@@ -83,19 +91,22 @@ def main():
     # make model
     model = load_model()
     print 'VGG16 created\n'
-    '''
+    
     # read train and validation data and train the model for n epochs
     print 'Load train data:'
     X_train, Y_train = load_data(TRAIN_DIR)
     print 'Load val data:'
     X_val, Y_val = load_data(VAL_DIR)
     # TODO: Train model
-
+#    keras.callbacks.TensorBoard(histogram_freq = 0)
+    #model.fit(x = X_train, y = Y_train,batch_size = BATCH_SIZE, epochs = NUM_EPOCHS, validation_data = (X_val, Y_val))    
+    model.fit(x = X_train, y = Y_train,batch_size = BATCH_SIZE, epochs = NUM_EPOCHS)
 
     # TODO: Save model weights
 
+    model.save('happy_model.h5')    
+
     print 'model weights saved.'
-    '''
     return
 
 
