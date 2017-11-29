@@ -25,9 +25,9 @@ IMG_H, IMG_W, NUM_CHANNELS = 224, 224, 3
 MEAN_PIXEL = np.array([104., 117., 123.]).reshape((1,1,3))
 TRAIN_DIR = './yaleB_faces/trainSet/'  #TODO OK
 VAL_DIR = './yaleB_faces/valSet/'  #TODO OK
-NUM_EPOCHS = 3  #TODO OK
+NUM_EPOCHS = 1  #TODO OK
 BATCH_SIZE = 16
-NUM_CLASSES = 2  #TODO OK
+NUM_CLASSES = 18  #TODO OK
 
 
 def load_model():
@@ -83,7 +83,7 @@ def load_data(src_path):
         X[i, :, :, :] = image
         Y[i, :] = label
 #    Y = Y-np.min(Y)
-    Y = to_categorical(Y)
+    Y = to_categorical(Y,NUM_CLASSES)
     return X, Y
 
 
@@ -99,8 +99,7 @@ def main():
     X_val, Y_val = load_data(VAL_DIR)
     # TODO: Train model
 #    keras.callbacks.TensorBoard(histogram_freq = 0)
-    #model.fit(x = X_train, y = Y_train,batch_size = BATCH_SIZE, epochs = NUM_EPOCHS, validation_data = (X_val, Y_val))    
-    model.fit(x = X_train, y = Y_train,batch_size = BATCH_SIZE, epochs = NUM_EPOCHS)
+    model.fit(x = X_train, y = Y_train,batch_size = BATCH_SIZE, epochs = NUM_EPOCHS, validation_data = (X_val, Y_val))    
 
     # TODO: Save model weights
 
