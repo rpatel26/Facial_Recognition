@@ -4,7 +4,7 @@ File description: organize face data from yaleB_faces into three separate folder
 '''
 import os, glob, shutil
 
-for i in range( 18 ):
+for i in range( 18 ): #18 is for folders from 00 to 17
     # generating path names/ folder names
     if i >= 10:
         filename = '../yaleB_faces/%s/*' %(i)
@@ -29,7 +29,7 @@ for i in range( 18 ):
     valSet = files[train:val]
     testSet = files[val:len(files)]
 
-    # creating new directory is its not already there
+    # creating new directory if its not already there
     if not os.path.exists( newFile_train ):
         os.makedirs( newFile_train )
   
