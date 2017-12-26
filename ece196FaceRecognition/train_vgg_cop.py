@@ -27,7 +27,7 @@ TRAIN_DIR = './yaleB_faces/trainSet/'  #TODO OK
 VAL_DIR = './yaleB_faces/valSet/'  #TODO OK
 NUM_EPOCHS = 1  #TODO OK
 BATCH_SIZE = 16
-NUM_CLASSES = 18  #TODO OK
+NUM_CLASSES = 20  #TODO OK
 
 
 def load_model():

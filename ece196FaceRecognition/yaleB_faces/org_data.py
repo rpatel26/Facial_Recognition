@@ -3,8 +3,17 @@ File description: organize face data from yaleB_faces into three separate folder
     namely training set, validation set, and test set
 '''
 import os, glob, shutil
+'''
+#new addition
 
-for i in range( 18 ): #18 is for folders from 00 to 17
+i = 18 # i is the folder which is being organized
+filename = '../yaleB_faces/%s/*' %(i)
+newFile_train = './trainset/%s/' %i
+newFile_val = './valSet/%s/' %i
+newFile_test = './testSet/%s/' %i
+
+'''
+for i in range( 20 ): #18 is for folders from 00 to 17
     # generating path names/ folder names
     if i >= 10:
         filename = '../yaleB_faces/%s/*' %(i)

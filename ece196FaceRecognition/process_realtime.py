@@ -55,9 +55,10 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
         newImg = image[ y:y+h, x:x+w ]
         cv2.imshow( "faceImg", newImg )
         count += 1
-        if count <= 350:
-            filePath = '../dataFace/face%s.jpg' %count
+        if count <= 500:
+            filePath = './yaleB_faces/19/face%s.jpg' %count
             cv2.imwrite( filePath, newImg )
+            print count
         else:
             print 'done collecting faces'
         #time.sleep( 5 )
