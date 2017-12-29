@@ -143,7 +143,7 @@ def main():
                 cv2.waitKey(1)
                 cv2.waitKey(1)
                 # remove result
-                #os.remove(NEW_RESULT_PATH)
+                os.remove(NEW_RESULT_PATH)
                 break
 
         rawCapture.truncate(0)
