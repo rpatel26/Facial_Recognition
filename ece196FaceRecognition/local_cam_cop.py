@@ -23,8 +23,8 @@ NEW_FACE_NAME = "/new_face.jpg"
 face_path = (NEW_FACE_PATH + NEW_FACE_NAME) #local, i added this
 IMG_DEST_DIR = "/home/ec2-user/Facial_Recognition/ece196FaceRecognition/new_face" # ec2 #directory where the new face image is stored
 FONT = cv2.FONT_HERSHEY_SIMPLEX
-RESULT_SRC_DIR = "/home/ec2-user/Facial_Recognition/ece196FaceRecognition/result"  # ec2
-RESULT_DEST_DIR = "/home/pi/result"  # local # the path up to the directory (not including the result file) where the result is stored in rpi 
+RESULT_SRC_DIR = "/home/ec2-user/Facial_Recognition/ece196FaceRecognition/result/result.txt"  # ec2
+RESULT_DEST_DIR = "/home/pi/result/result.txt"  # local # the path up to the directory (not including the result file) where the result is stored in rpi 
 NEW_RESULT_PATH = "/home/pi/result/result.txt"  # local # path where the result file is stored in the rpi (including where the new result file is stored
 
 
@@ -143,7 +143,7 @@ def main():
                 cv2.waitKey(1)
                 cv2.waitKey(1)
                 # remove result
-                os.remove(NEW_RESULT_PATH)
+                #os.remove(NEW_RESULT_PATH)
                 break
 
         rawCapture.truncate(0)
