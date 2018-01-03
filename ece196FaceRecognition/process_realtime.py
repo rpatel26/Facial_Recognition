@@ -31,10 +31,10 @@ def createRectangle( image, dim ):
 
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
-camera.resolution = (160, 128)
+camera.resolution = (240, 240) #initially 160, 128
 camera.framerate = 32 
 camera.color_effects = (128,128) #This adds a grayscale effect
-rawCapture = PiRGBArray(camera, size=(160, 128))
+rawCapture = PiRGBArray(camera, size=(240, 240)) #initially 160, 128
 
 # initialized cascade classifier for facial detection
 face_cascade = cv2.CascadeClassifier( '/home/pi/opencv-2.4.13.4/data/haarcascades/haarcascade_frontalface_default.xml' )
