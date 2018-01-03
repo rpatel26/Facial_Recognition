@@ -50,16 +50,26 @@ def classify(file_path, model):
     mean_pixel = np.array([104., 117., 123.]).reshape((1, 1, 3))
 
     # TODO: use opencv to read and resize image to standard dimensions #OK
-    image = cv2.resize(file_path, (img_width, img_height))  
+    img = cv2.imread(file_path)
+    image = cv2.resize(img, (img_width, img_height))  
 
     # TODO: subtract mean_pixel from that image, name the final image as new_img
-    new_img = image[100,100] - mean_pixel # the [100, 100] allows the images' pixel values to be accessed
+    new_img = image - mean_pixel # the [100, 100] allows the images' pixel values to be accessed
     x = np.expand_dims(new_img, axis=0)
 
     # TODO: use network to predict x, get label and confidence of prediction
-    prediction = model.predict(x)
-    label = prediction[0]
-    conf = prediction[1]
+    prediction = model.predict(x)[0]
+    maxValue = 0
+    maxIndex = 0
+    total = 0
+    for index, val in enumerate(prediction):
+        if val > maxValue :
+            maxValue = val
+            maxIndex = index
+        total += val
+        
+    conf = maxValue/total
+    label = maxIndex
     # TODO: label is a number, which correspond to the same number you give to the folder when you organized data
 
     return label, conf
@@ -74,14 +84,16 @@ def write_result(label, conf):
     # open file to write in
     result_file = open(os.path.join(RESULT_DIR, RESULT_FILE_NAME), 'w')
     # TODO: convert the label to a name. Eg. if the label of your face is 20, save your name as "name"
-    if label == 17:
+    if (label <17 and label >=0) :
+            name = str(label)
+    elif label == 17:
         name = 'Sai'
     elif label == 18:
         name = 'Aasritha'
     elif label == 19:
         name = 'Chandu'
     else:
-        name = str(label)
+        name = 'stranger'
 
     result = ','.join([name, str(conf)])
     result_file.write(result)
